@@ -44,7 +44,6 @@ separator = "-" * 40
 username = input("Username: ")
 chosen_password = input("Password: ")
 
-
 # pokud uživatel není registrovaný, upozorni jej a ukonči program.
 if username not in users:
     print("Unregistered user, terminating the program.")
@@ -65,7 +64,6 @@ else:
             separator, sep="\n"
         )
         
-
 # Program nechá uživatele vybrat mezi třemi texty, uloženými v proměnné TEXTS
         text_selection = input("Enter a number btw. 1 and 3 to select: ")
 
@@ -80,14 +78,12 @@ else:
 # Pokud je vše v pořádku, proběhne výběr textu
         else:
             text = TEXTS[int(text_selection)-1]
-            
-            print(separator)
-
+           
 # Pro vybraný text spočítá počet slov:
-            slova = list()
+            words = list()
 
-            for slovo in text.split():
-                slova.append(slovo.strip(",.;:"))
+            for word in text.split():
+                words.append(word.strip(",.;:"))
             
             titlecase = 0
             uppercase = 0
@@ -95,7 +91,7 @@ else:
             numeric = 0
             sum_of_numbers = 0
             
-            for word in slova:
+            for word in words:
 # počet slov začínajících velkým písmenem
                 if word[0].isupper():
                     titlecase += 1
@@ -112,35 +108,35 @@ else:
                 elif word.isnumeric():
                     numeric += 1
                     sum_of_numbers += int(word)
-           
-    
+               
             print(
-                f"There are {len(slova)} words in the selected text.",
+                separator,
+                f"There are {len(words)} words in the selected text.",
                 f"There are {titlecase} titlecase words.",
                 f"There are {uppercase} uppercase words.",
                 f"There are {lowercase} lowercase words.",
                 f"There are {numeric} numeric strings.",
-                f"The sum of all the numbers {sum_of_numbers}", separator, sep="\n"
+                f"The sum of all the numbers {sum_of_numbers}", 
+                separator, sep="\n"
             )
           
-
 # Program zobrazí jednoduchý sloupcový graf, který bude reprezentovat četnost různých délek slov v textu.                       
-            delka_slov = dict()
+            word_length = dict()
 
-            for word in slova:
-                if len(word) not in delka_slov:
-                    delka_slov[len(word)] = 1
+            for word in words:
+                if len(word) not in word_length:
+                    word_length[len(word)] = 1
                 else:
-                    delka_slov[len(word)] += 1
+                    word_length[len(word)] += 1
 
-            delka_slov_list = list(delka_slov.keys())
-            delka_slov_list.sort()
-            sorted_delka_slov = {i: delka_slov[i] for i in delka_slov_list}
+            word_length_list = list(word_length.keys())
+            word_length_list.sort()
+            sorted = {i: word_length[i] for i in word_length_list}
 
-            print("LEN|", "OCCURENCES".center(max(delka_slov.values())), "|NR", sep="")
+            print("LEN|", "OCCURENCES".center(max(word_length.values())), "|NR", sep="")
             print(separator)
 
-            for key in sorted_delka_slov:
+            for key in sorted:
                 print(" " * (2 - len(str(key))), key, end="")
-                print("|", "*" * sorted_delka_slov[key], sep="", end="")
-                print((max(delka_slov.values())-sorted_delka_slov[key]) * " ", sorted_delka_slov[key], sep="|")
+                print("|", "*" * sorted[key], sep="", end="")
+                print((max(word_length.values())-sorted[key]) * " ", sorted[key], sep="|")
