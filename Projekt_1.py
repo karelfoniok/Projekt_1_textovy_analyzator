@@ -37,21 +37,34 @@ garpike and stingray are also present.'''
 users = ["bob", "ann", "mike", "liz"]
 passwords = ["123", "pass123", "password123", "pass123"]
 
+separator = "-" * 40
 
 # Program si vyžádá od uživatele přihlašovací jméno a heslo a 
 # zjistí, jestli zadané údaje odpovídají někomu z registrovaných uživatelů
 username = input("Username: ")
-password = input("Password: ")
+chosen_password = input("Password: ")
 
 
-# pokud je registrovaný a zadá správné heslo, pozdrav jej a umožni mu analyzovat texty
-if username in users:
+# pokud uživatel není registrovaný, upozorni jej a ukonči program.
+if username not in users:
+    print("Unregistered user, terminating the program.")
+
+else:
     passwords = passwords[users.index(username)]
 
-    if passwords == password:
-        print("-" * 40)
-        print(f"Welcome to the app, {username} \nWe have 3 texts to be analyzed.")
-        print("-" * 40)
+# pokud je uživatel registrovaný, ale zadá špatné heslo, sděl mu tuto informaci
+    if passwords != chosen_password:
+        print(f"You input wrong password, {username}")
+
+# pokud je registrovaný a zadá správné heslo, pozdrav jej a umožni mu analyzovat texty       
+    else:             
+        print(
+            separator,
+            f"Welcome to the app, {username}",
+            "We have 3 texts to be analyzed.",
+            separator, sep="\n"
+        )
+        
 
 # Program nechá uživatele vybrat mezi třemi texty, uloženými v proměnné TEXTS
         text_selection = input("Enter a number btw. 1 and 3 to select: ")
@@ -68,10 +81,11 @@ if username in users:
         else:
             text = TEXTS[int(text_selection)-1]
             
-            print("-" * 40)
+            print(separator)
 
 # Pro vybraný text spočítá počet slov:
             slova = list()
+
             for slovo in text.split():
                 slova.append(slovo.strip(",.;:"))
             
@@ -80,10 +94,8 @@ if username in users:
             lowercase = 0
             numeric = 0
             sum_of_numbers = 0
-
             
             for word in slova:
-
 # počet slov začínajících velkým písmenem
                 if word[0].isupper():
                     titlecase += 1
@@ -102,14 +114,15 @@ if username in users:
                     sum_of_numbers += int(word)
            
     
-            print(f"There are {len(slova)} words in the selected text.")
-            print(f"There are {titlecase} titlecase words.")
-            print(f"There are {uppercase} uppercase words.")
-            print(f"There are {lowercase} lowercase words.")
-            print(f"There are {numeric} numeric strings.")
-            print(f"The sum of all the numbers {sum_of_numbers}")
-
-            print("-" * 40)
+            print(
+                f"There are {len(slova)} words in the selected text.",
+                f"There are {titlecase} titlecase words.",
+                f"There are {uppercase} uppercase words.",
+                f"There are {lowercase} lowercase words.",
+                f"There are {numeric} numeric strings.",
+                f"The sum of all the numbers {sum_of_numbers}", separator, sep="\n"
+            )
+          
 
 # Program zobrazí jednoduchý sloupcový graf, který bude reprezentovat četnost různých délek slov v textu.                       
             delka_slov = dict()
@@ -124,18 +137,10 @@ if username in users:
             delka_slov_list.sort()
             sorted_delka_slov = {i: delka_slov[i] for i in delka_slov_list}
 
-            print("LEN| OCCURENCES", " " * ((max(delka_slov.values()))-12), "|NR")
-            print("-" * 40)
+            print("LEN|", "OCCURENCES".center(max(delka_slov.values())), "|NR", sep="")
+            print(separator)
 
             for key in sorted_delka_slov:
                 print(" " * (2 - len(str(key))), key, end="")
-                print("|", "*" * sorted_delka_slov[key], end="")
+                print("|", "*" * sorted_delka_slov[key], sep="", end="")
                 print((max(delka_slov.values())-sorted_delka_slov[key]) * " ", sorted_delka_slov[key], sep="|")
-
-# pokud je uživatel registrovaný, ale zadá špatné heslo, sděl mu tuto informaci
-    else:
-        print(f"You input wrong password, {username}")
-
-# pokud uživatel není registrovaný, upozorni jej a ukonči program.
-else:
-    print("Unregistered user, terminating the program.")
