@@ -122,7 +122,7 @@ else:
           
 # Program zobrazí jednoduchý sloupcový graf, který bude reprezentovat četnost různých délek slov v textu.                       
             word_length = dict()
-
+            
             for word in words:
                 if len(word) not in word_length:
                     word_length[len(word)] = 1
@@ -133,10 +133,15 @@ else:
             word_length_list.sort()
             sorted = {i: word_length[i] for i in word_length_list}
 
-            print("LEN|", "OCCURENCES".center(max(word_length.values())), "|NR", sep="")
+            longest_word = max(word_length.values())
+
+            print("LEN|", "OCCURENCES".center(longest_word), "|NR", sep="")
             print(separator)
 
             for key in sorted:
-                print(" " * (2 - len(str(key))), key, end="")
-                print("|", "*" * sorted[key], sep="", end="")
-                print((max(word_length.values())-sorted[key]) * " ", sorted[key], sep="|")
+                print(
+                    f"{key: >3}|{("*" * sorted[key]).ljust(
+                        longest_word)}|{sorted[key]}"
+                    )
+               
+                
