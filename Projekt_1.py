@@ -98,7 +98,7 @@ else:
                     uppercase += 1
            
 # počet slov psaných malými písmeny,           
-                elif word.islower():
+                elif word.islower() and word.isalpha():
                     lowercase += 1
              
 # počet čísel a sumu všech čísel v textu             
