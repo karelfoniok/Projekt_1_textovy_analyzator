@@ -33,26 +33,23 @@ in modern oceans. Other fish such as paddlefish,
 garpike and stingray are also present.'''
 ]
 
-
-users = ["bob", "ann", "mike", "liz"]
-passwords = ["123", "pass123", "password123", "pass123"]
+user_password = {"bob": "123", "ann": "pass123", "mike": "password123", "liz": "pass123"}
 
 separator = "-" * 40
 
-# Program si vyžádá od uživatele přihlašovací jméno a heslo a 
-# zjistí, jestli zadané údaje odpovídají někomu z registrovaných uživatelů
+# Program si vyžádá od uživatele přihlašovací jméno a zjistí, jestli odpovídá někomu z registrovaných uživatelů
 username = input("Username: ")
-chosen_password = input("Password: ")
 
 # pokud uživatel není registrovaný, upozorni jej a ukonči program.
-if username not in users:
+if username not in user_password.keys():
     print("Unregistered user, terminating the program.")
 
-else:
-    passwords = passwords[users.index(username)]
-
-# pokud je uživatel registrovaný, ale zadá špatné heslo, sděl mu tuto informaci
-    if passwords != chosen_password:
+# pokud je uživatel registrovaný, program si vyžádá jeho heslo:
+else: 
+    password = input("Password: ")
+    
+# Pokud uživatel zadá špatné heslo, sděl mu tuto informaci    
+    if password != user_password[username]:
         print(f"You input wrong password, {username}")
 
 # pokud je registrovaný a zadá správné heslo, pozdrav jej a umožni mu analyzovat texty       
