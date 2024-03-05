@@ -90,11 +90,11 @@ else:
             
             for word in words:
 # počet slov začínajících velkým písmenem
-                if word[0].isupper():
+                if word.istitle() and word.isalpha():
                     titlecase += 1
             
 # počet slov psaných velkými písmeny,            
-                elif word.isupper():
+                elif word.isupper() and word.isalpha():
                     uppercase += 1
            
 # počet slov psaných malými písmeny,           
